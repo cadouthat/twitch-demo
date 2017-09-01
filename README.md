@@ -36,4 +36,9 @@ Request
 
 Response
 
-    //
+    {
+        "_id":"28565473",
+        "display_name":"Sp4zie",
+        "bio":"♥ Welcome to the livestream! When am I LIVE? Every Tuesday at 4PM CET! And sometimes I livestream on other days too! Go and watch videos on my YouTube channel: http://www.youtube.com/sp4zie",
+        "created_at":"2012-02-27T12:26:41.886333Z"
+    }
