@@ -25,9 +25,9 @@ Once the server is running, it will serve a simple webpage on [http://localhost:
 ## Backend APIs
 The server exposes APIs under http://localhost:8080/api/. All endpoints provide JSON data for status 200 responses, and will use different status codes for errors.
 
-* GET /api/user?name=<username> -> returns information about a Twitch user
-* GET /api/channel?name=<username> -> returns information about a Twitch user's channel
-* GET /api/stream?name=<username> -> returns information about a Twitch user's current live stream, if they are broadcasting (otherwise 'null')
+* GET /api/user?name=[username] returns information about a Twitch user
+* GET /api/channel?name=[username] returns information about a Twitch user's channel
+* GET /api/stream?name=[username] returns information about a Twitch user's current live stream, if they are broadcasting (otherwise 'null')
 
 ## Example Request/Response
 Request
