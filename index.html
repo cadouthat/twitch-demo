@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Twitch API Demo - Connor Douthat</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+	function doAPI(path, success) {
+		var nameParam = $("#username").val();
+
+		$.getJSON(path + "?name=" + nameParam, success)
+			.fail(function (result) {
+				alert(result.responseText);
+				success();
+			});
+	}
+
+	$(document).ready(function () {
+		$("#username").focus(function() {
+			$("#userInfo").empty();
+			$("#channelInfo").empty();
+			$("#streamInfo").empty();
+		});
+
+		$("#loadUserInfo").click(function() {
+			var info = $("#userInfo");
+			info.empty();
+			info.append($("<p>").text("Loading.."));
+
+			doAPI("/api/user", function (result) {
+				info.empty();
+				if (result === undefined) return;
+
+				info.append($("<p>").text("Display Name: " + result.display_name));
+				info.append($("<p>").text("Bio: " + result.bio));
+				var created = new Date(result.created_at);
+				info.append($("<p>").text("Date Created: " + created.toLocaleString()));
+			});
+		});
+
+		$("#loadChannelInfo").click(function() {
+			var info = $("#channelInfo");
+			info.empty();
+			info.append($("<p>").text("Loading.."));
+
+			doAPI("/api/channel", function (result) {
+				info.empty();
+				if (result === undefined) return;
+
+				info.append($("<p>").text("Game: " + result.game));
+				info.append($("<p>").text("Language: " + result.language));
+				info.append($("<p>").text("Views: " + result.views.toLocaleString()));
+				info.append($("<p>").text("Followers: " + result.followers.toLocaleString()));
+			});
+		});
+
+		$("#loadStreamInfo").click(function() {
+			var info = $("#streamInfo");
+			info.empty();
+			info.append($("<p>").text("Loading.."));
+
+			doAPI("/api/stream", function (result) {
+				info.empty();
+				if (result === undefined) return;
+
+				if (result == null) {
+					info.append($("<p>").text("No live stream :("));
+				} else {
+					info.append($("<p>").text("Live Now! " + result.viewers.toLocaleString() + " watching"));
+				}
+			});
+		});
+	});
+	</script>
+	<style>
+	div {
+		display: inline-block;
+		padding: 20px;
+		background: #CDCDCD;
+	}
+	</style>
+</head>
+<body>
+	<p>Enter a Twitch username: <input type="text" id="username"/></p>
+	<p><button id="loadUserInfo">Get User Info</button></p>
+	<div id="userInfo"></div>
+	<p><button id="loadChannelInfo">Get Channel Info</button></p>
+	<div id="channelInfo"></div>
+	<p><button id="loadStreamInfo">Get Stream Status</button></p>
+	<div id="streamInfo"></div>
+</body>
+</html>
